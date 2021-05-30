@@ -1,4 +1,4 @@
-import { Card, Button, Row, Col, Form, Input } from "antd";
+import { Card, Button, Row, Col, Form, Input, InputNumber } from "antd";
 import { FieldNumberOutlined /*, GithubOutlined */ } from "@ant-design/icons";
 import logo from "../assets/logo.png";
 import React from "react";
@@ -6,11 +6,22 @@ import "../index.css";
 
 export default class App extends React.Component {
   state = {
+    form: {
+      x1: undefined,
+      x2: undefined,
+      x3: undefined,
+      y1: undefined,
+      y2: undefined,
+      y3: undefined,
+      y4: undefined,
+      y5: undefined,
+      y6: undefined,
+      z1: undefined,
+      z2: undefined,
+    },
     show_info: true,
     show_calc: false,
   };
-
-  form = React.createRef();
 
   inverte_exibicao = () => {
     const { show_info, show_calc } = this.state;
@@ -21,7 +32,32 @@ export default class App extends React.Component {
     });
   };
 
-  finalizado = () => {};
+  changeVal = (field, value) => {
+    console.log(field, value)
+    this.setState({
+      form :{
+        ...this.state.form,
+        [field]: value,
+      }
+    }, () => console.log(this.state.form[field]));
+  };
+
+  generateField = (field, placeholder) => {
+    return (
+      <InputNumber
+        prefix={<FieldNumberOutlined />}
+        placeholder={placeholder}
+        style={{ width: "100%" }}
+        onChange={(val) => this.changeVal(field, val)}
+      />
+    );
+  };
+
+  finalizado = () => {
+    const { form } = this.state;
+
+    console.log(form)
+  };
 
   render() {
     const { show_info, show_calc } = this.state;
@@ -37,7 +73,7 @@ export default class App extends React.Component {
             }}
           >
             <Row
-              style={{ marginTop: "25px", marginBottom: "65px" }}
+              style={{ marginTop: "25px", marginBottom: "65px", width: "100%" }}
               justify="center"
             >
               <Col span={4}>
@@ -83,37 +119,61 @@ export default class App extends React.Component {
 
             {show_calc && (
               <>
-                <Row style={{ marginBottom: "25px", width: "100%" }}>
-                  <Col span={24}>
-                    <div className="inputBox">
-                      <Input
-                        className="input"
-                        prefix={<FieldNumberOutlined />}
-                        placeholder="Valor aí"
-                      />
-                    </div>
+                <Row
+                  gutter={[12, 12]}
+                  style={{ marginBottom: "25px" }}
+                  justify="space-between"
+                >
+                  <Col span={8}>
+                    {this.generateField("x1", "Malte Pale Ale (kg)")}
+                  </Col>
+                  <Col span={8}>
+                    {this.generateField("x2", "Malte Carared (kg)")}
+                  </Col>
+                  <Col span={8}>
+                    {this.generateField("x3", "Malte Chateau Cara Blond (kg)")}
                   </Col>
                 </Row>
-                <Row style={{ marginBottom: "25px", width: "100%" }}>
-                  <Col span={24}>
-                    <div className="inputBox">
-                      <Input
-                        className="input"
-                        prefix={<FieldNumberOutlined />}
-                        placeholder="Valor aí"
-                      />
-                    </div>
+                <Row
+                  gutter={[12, 12]}
+                  style={{ marginBottom: "25px" }}
+                  justify="space-between"
+                >
+                  <Col span={8}>
+                    {this.generateField("y1", "Lúpulo Galena (kg)")}
+                  </Col>
+                  <Col span={8}>
+                    {this.generateField("y2", "Lúpulo Columbus  (kg)")}
+                  </Col>
+                  <Col span={8}>
+                    {this.generateField("y3", "Lúpulo Cascade (kg)")}
                   </Col>
                 </Row>
-                <Row style={{ marginBottom: "25px", width: "100%"}}>
-                  <Col span={24}>
-                    <div className="inputBox">
-                      <Input
-                        className="input"
-                        prefix={<FieldNumberOutlined />}
-                        placeholder="Valor aí"
-                      />
-                    </div>
+                <Row
+                  gutter={[12, 12]}
+                  style={{ marginBottom: "25px" }}
+                  justify="space-between"
+                >
+                  <Col span={8}>
+                    {this.generateField("y4", "Lúpulo Centennial (kg)")}
+                  </Col>
+                  <Col span={8}>
+                    {this.generateField("y5", "Lúpulo Chinook (kg)")}
+                  </Col>
+                  <Col span={8}>
+                    {this.generateField("y6", "Lúpulo Aramis (kg)")}
+                  </Col>
+                </Row>
+                <Row
+                  gutter={[12, 12]}
+                  style={{ marginBottom: "25px" }}
+                  justify="space-between"
+                >
+                  <Col span={12}>
+                    {this.generateField("z1", "Levedura US-05 (kg)")}
+                  </Col>
+                  <Col span={12}>
+                    {this.generateField("z2", "Levedura SafAle BE 134 (kg)")}
                   </Col>
                 </Row>
 
